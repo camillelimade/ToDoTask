@@ -104,9 +104,8 @@ public class ToDoController {
         System.out.println("ToDoTask — Sua lista de Task's");
         divisor();
         for (Task task : tasks) {
-
             System.out.println(task.toString());
-            divisor();
+            System.out.println(" ");
         }
 
     }
@@ -119,6 +118,17 @@ public class ToDoController {
             }
         }
     }
-
+public void completaTask(int ID, ArrayList<Task> tasks) {
+        // int indice = ID - 1;
+    for (Task task : tasks) {
+        if (task.getId() == ID) {
+            task.setCompleta(true);
+            System.out.println("Task " + task.getTexto() + " completada com sucesso! ");
+            return;
+        }else {
+            System.out.println("Não foi possível completar a Task " + task.getTexto() + "! Tente novamente.");
+        }
+    }
+}
 
 }

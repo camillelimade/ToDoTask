@@ -43,6 +43,12 @@ public class Main {
                     int taskId = input.nextInt();
                     executar.excluirTask(taskId, Tarefas);
                     break;
+                case 4:
+                    System.out.println("Digite o ID da Task que deseja completar: ");
+                    Scanner lerTaskComplete = new Scanner(System.in);
+                    int idTaskComplete = input.nextInt();
+                    executar.completaTask(idTaskComplete, Tarefas);
+                    break;
                 case 5:
                     System.out.println("Encerrando...");
                     executar.divisor();
