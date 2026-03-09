@@ -46,4 +46,20 @@ public class Task {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+    public String verificaStatus(){
+        if (isCompleta()){
+            return "Completa";
+        }else {
+            return "Incompleta";
+        }
+    }
+    @Override
+    public String toString() {
+        return "ID: " + id + "\n" +
+                "Nome: " + texto + "\n" +
+                "Status: " + verificaStatus() + "\n" +
+                "Categoria: " + categoria + "\n" +
+                "Descrição: " + descricao;
+    }
+
 }

@@ -34,6 +34,7 @@ public class Main {
                     break;
                 case 2:
                     // listar tasks
+                    executar.listarTasks(Tarefas);
                     break;
                 case 6:
                     System.out.println("Encerrando...");

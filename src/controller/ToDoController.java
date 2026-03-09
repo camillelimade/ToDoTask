@@ -49,10 +49,10 @@ public class ToDoController {
         divisor();
         System.out.println("Essas são suas opções: \n" +
                 " 1. Criar uma nova task\n" +
-                " 2. Completar task\n" +
+                " 2. Listar todas as tasks\n" +
                 " 3. Editar task\n" +
                 " 4. Excluir task\n" +
-                " 5. Listar todas as tasks\n" +
+                " 5. Completar task\n" +
                 " 6. Sair"
         );
         divisor();
@@ -90,10 +90,23 @@ public class ToDoController {
             throw new NullPointerException("Erro ao criar task: parâmetros inválidos, tente novamente. ");
         }else {
             divisor();
-            System.out.println("Task registrada com sucesso! ");
+            System.out.println("Task" + texto +" registrada com sucesso! ");
             return new Task(ID, texto, categoria, descricao);
         }
 
+
+    }
+    public void listarTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println("Erro ao listar: Não foi encontrado nenhuma task registrada. ");
+            return;
+        }
+        System.out.println("ToDoTask — Sua lista de Task's");
+        divisor();
+        for (Task task : tasks) {
+            System.out.println(task.toString());
+            divisor();
+        }
 
     }
 }
