@@ -17,19 +17,33 @@ public class Main {
         int idTask = 1;
 
         Usuario novoUsuario;
-        try{
+        try {
             novoUsuario = executar.cadastro();
-        }catch (Exception e){
-            System.out.println("Erro no cadastro: " +  e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro no cadastro: " + e.getMessage());
             return;
         }
 
         // execução do menu principal do gerenciador
-        int opcao = executar.menu();
-//        switch (opcao) {
-//            case 1:
-//                // função de adicionar tasks no próximo commit
-//        }
+        do {
+            int opcao = executar.menu();
+            switch (opcao) {
+                case 1:
+                    Tarefas.add(executar.criaTask(idTask));
+                    idTask++;
+                    break;
+                case 2:
+                    // listar tasks
+                    break;
+                case 6:
+                    System.out.println("Encerrando...");
+                    executar.divisor();
+                    desejaContinuar = false;
+                    return;
+                default:
+                    System.out.println("Digite uma opção válida!");
 
+            }
+        } while (desejaContinuar);
     }
 }

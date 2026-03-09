@@ -5,12 +5,14 @@ public class Task {
     private String texto;
     private boolean completa = false;
     private String categoria;
+    private String descricao;
 
-    public Task(int id, String texto, boolean completa, String categoria) {
+    public Task(int id, String texto, String categoria, String descricao) {
         this.id = id;
         this.texto = texto;
-        this.completa = completa;
+        this.completa = false;
         this.categoria = categoria;
+        this.descricao = descricao;
     }
 
     public int getId() {

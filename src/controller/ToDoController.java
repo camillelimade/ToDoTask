@@ -75,4 +75,25 @@ public class ToDoController {
         }
         return opcao;
     }
+    public Task criaTask(int ID) {
+        Scanner lerTask = new  Scanner(System.in);
+        System.out.println("ToDoTask - Adicione aqui uma nova task: ");
+        String texto =  lerTask.nextLine();
+        divisor();
+        System.out.println("ToDoTask - Digite uma categoria para sua task");
+        String categoria = lerTask.nextLine();
+        divisor();
+        System.out.println("ToDoTask - Descreva sua Task:");
+        String descricao =  lerTask.nextLine();
+
+        if (texto.isBlank() || categoria.isBlank()) {
+            throw new NullPointerException("Erro ao criar task: parâmetros inválidos, tente novamente. ");
+        }else {
+            divisor();
+            System.out.println("Task registrada com sucesso! ");
+            return new Task(ID, texto, categoria, descricao);
+        }
+
+
+    }
 }
