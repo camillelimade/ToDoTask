@@ -4,7 +4,6 @@ import model.Task;
 import model.Usuario;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ToDoController {
@@ -50,10 +49,9 @@ public class ToDoController {
         System.out.println("Essas são suas opções: \n" +
                 " 1. Criar uma nova task\n" +
                 " 2. Listar todas as tasks\n" +
-                " 3. Editar task\n" +
-                " 4. Excluir task\n" +
-                " 5. Completar task\n" +
-                " 6. Sair"
+                " 3. Excluir task\n" +
+                " 4. Completar task\n" +
+                " 5. Sair"
         );
         divisor();
         int opcao;
@@ -75,27 +73,29 @@ public class ToDoController {
         }
         return opcao;
     }
+
     public Task criaTask(int ID) {
-        Scanner lerTask = new  Scanner(System.in);
+        Scanner lerTask = new Scanner(System.in);
         System.out.println("ToDoTask - Adicione aqui uma nova task: ");
-        String texto =  lerTask.nextLine();
+        String texto = lerTask.nextLine();
         divisor();
         System.out.println("ToDoTask - Digite uma categoria para sua task");
         String categoria = lerTask.nextLine();
         divisor();
         System.out.println("ToDoTask - Descreva sua Task:");
-        String descricao =  lerTask.nextLine();
+        String descricao = lerTask.nextLine();
 
         if (texto.isBlank() || categoria.isBlank()) {
             throw new NullPointerException("Erro ao criar task: parâmetros inválidos, tente novamente. ");
-        }else {
+        } else {
             divisor();
-            System.out.println("Task" + texto +" registrada com sucesso! ");
+            System.out.println("Task " + texto + " registrada com sucesso! ");
             return new Task(ID, texto, categoria, descricao);
         }
 
 
     }
+
     public void listarTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             System.out.println("Erro ao listar: Não foi encontrado nenhuma task registrada. ");
@@ -104,9 +104,21 @@ public class ToDoController {
         System.out.println("ToDoTask — Sua lista de Task's");
         divisor();
         for (Task task : tasks) {
+
             System.out.println(task.toString());
             divisor();
         }
 
     }
+    public void excluirTask(int ID,  ArrayList<Task> tasks) {
+        for (Task task : tasks) {
+            if (task.getId() == ID) {
+                System.out.println("Task "+ task.getTexto() +" removida com sucesso! ");
+                tasks.remove(task);
+                return;
+            }
+        }
+    }
+
+
 }

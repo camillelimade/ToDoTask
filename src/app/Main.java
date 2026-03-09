@@ -36,7 +36,14 @@ public class Main {
                     // listar tasks
                     executar.listarTasks(Tarefas);
                     break;
-                case 6:
+                case 3:
+                    // excluir task
+                    executar.listarTasks(Tarefas);
+                    System.out.println("Digite o ID da task que deseja excluir: ");
+                    int taskId = input.nextInt();
+                    executar.excluirTask(taskId, Tarefas);
+                    break;
+                case 5:
                     System.out.println("Encerrando...");
                     executar.divisor();
                     desejaContinuar = false;

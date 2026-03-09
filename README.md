@@ -18,6 +18,5 @@ Esse repositório diz respeito a um sistema desenvolvido em prol do gereciamento
 ## Funcionalidades
 - Criar nova task
 - Listar todas as tasks
-- Editar task
 - Excluir task
 - Completar task
