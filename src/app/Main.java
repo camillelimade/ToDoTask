@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        ArrayList<Task> Tarefas = new ArrayList<Task>();
         ToDoController executar = new ToDoController();
 
         boolean desejaContinuar = true;
@@ -29,31 +28,31 @@ public class Main {
             switch (opcao) {
                 case 1:
                     // 1 - Criar task
-                    Tarefas.add(executar.criaTask(idTask));
+                    novoUsuario.getTasks().add(executar.criaTask(idTask));
                     idTask++;
                     break;
                 case 2:
                     // 2 - Editar task
                     System.out.println("Digite o ID da task que deseja editar: ");
                     int idEditar = input.nextInt();
-                    executar.editarTask(idEditar, Tarefas);
+                    executar.editarTask(idEditar, novoUsuario.getTasks());
                     break;
                 case 3:
                     // 3 - Excluir task
                     System.out.println("Digite o ID da task que deseja excluir: ");
                     int taskId = input.nextInt();
-                    executar.excluirTask(taskId, Tarefas);
+                    executar.excluirTask(taskId, novoUsuario.getTasks());
                     break;
                 case 4:
                     // 4 - Completar task
                     System.out.println("Digite o ID da Task que deseja completar: ");
                     Scanner lerTaskComplete = new Scanner(System.in);
                     int idTaskComplete = input.nextInt();
-                    executar.completaTask(idTaskComplete, Tarefas);
+                    executar.completaTask(idTaskComplete, novoUsuario.getTasks());
                     break;
                 case 5:
                     // 5 - Listar todas as tasks
-                    executar.listarTasks(Tarefas);
+                    executar.listarTasks(novoUsuario.getTasks());
                     break;
                 case 6:
                     //  6 - Sair
