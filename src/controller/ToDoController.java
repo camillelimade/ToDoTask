@@ -48,10 +48,11 @@ public class ToDoController {
         divisor();
         System.out.println("Essas são suas opções: \n" +
                 " 1. Criar uma nova task\n" +
-                " 2. Listar todas as tasks\n" +
+                " 2. Editar task\n" +
                 " 3. Excluir task\n" +
                 " 4. Completar task\n" +
-                " 5. Sair"
+                " 5. Listar todas as tasks\n" +
+                " 6. Sair"
         );
         divisor();
         int opcao;
@@ -125,10 +126,40 @@ public void completaTask(int ID, ArrayList<Task> tasks) {
             task.setCompleta(true);
             System.out.println("Task " + task.getTexto() + " completada com sucesso! ");
             return;
-        }else {
-            System.out.println("Não foi possível completar a Task " + task.getTexto() + "! Tente novamente.");
         }
     }
+    System.out.println("Não foi possível completar a Task! Tente novamente.");
+}
+public void editarTask(int ID, ArrayList<Task> tasks) {
+        for (Task task : tasks) {
+            if (task.getId() == ID) {
+                Scanner lerEdicaoTask = new Scanner(System.in);
+
+                System.out.println("ToDoTask - Altere o nome da task selecionada: ");
+                String nomeEdit = lerEdicaoTask.nextLine();
+                divisor();
+
+
+                System.out.println("ToDoTask - Altere a categoria da task selecionada: ");
+                String categoriaEdit = lerEdicaoTask.nextLine();
+                divisor();
+
+                System.out.println("ToDoTask - Descreva sua Task:");
+                String descricaoEdit = lerEdicaoTask.nextLine();
+
+                if (nomeEdit.isBlank() || categoriaEdit.isBlank()) {
+                    throw new NullPointerException("Erro ao editar task: parâmetros inválidos.");
+                }
+                task.setTexto(nomeEdit); // nome da task
+                task.setCategoria(categoriaEdit);
+                task.setDescricao(descricaoEdit);
+                divisor();
+                System.out.println("Task " + nomeEdit + " editada com sucesso!");
+
+                return;
+            }
+        }
+    System.out.println("Task não encontrada.");
 }
 
 }

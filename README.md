@@ -16,7 +16,8 @@ Esse repositório diz respeito a um sistema desenvolvido em prol do gereciamento
 - **model**: contém os 'modelos'de entidades do sistema, como a classe `usuario`, e `tasks` que virão a ser instanciadas constantemente
 
 ## Funcionalidades
-- Criar nova task
-- Listar todas as tasks
+- Criar task
+- Editar task
 - Excluir task
 - Completar task
+- Listar todas as tasks
