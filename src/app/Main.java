@@ -38,13 +38,14 @@ public class Main {
                     // 3 - Excluir task
                     System.out.println("Digite o ID da task que deseja excluir: ");
                     int taskId = input.nextInt();
+                    input.nextLine();
                     executar.excluirTask(taskId, novoUsuario.getTasks());
                     break;
                 case 4:
                     // 4 - Completar task
                     System.out.println("Digite o ID da Task que deseja completar: ");
-                    Scanner lerTaskComplete = new Scanner(System.in);
                     int idTaskComplete = input.nextInt();
+                    input.nextLine();
                     executar.completaTask(idTaskComplete, novoUsuario.getTasks());
                     break;
                 case 5:

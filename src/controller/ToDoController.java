@@ -1,14 +1,14 @@
 package controller;
-
+import service.CategoriaService;
 import model.Task;
 import model.Usuario;
-
+import model.Categoria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ToDoController {
     private ArrayList<Task> tasks = new ArrayList<>();
-
+    private CategoriaService categoriaService = new CategoriaService();
     public void divisor() {
         System.out.println("-----------------------------------------");
     }
@@ -41,7 +41,36 @@ public class ToDoController {
         }
 
     }
+    public Categoria menuCategorias() {
 
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Escolha uma categoria:");
+
+        int i = 1;
+        for (Categoria cat : categoriaService.listarCategorias()) {
+            System.out.println(i + ". " + cat.getNome());
+            i++;
+        }
+
+        System.out.println(i + ". Criar nova categoria");
+
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        if (opcao == i) {
+
+            System.out.println("Digite o nome da nova categoria:");
+            String nome = scanner.nextLine();
+
+            return categoriaService.criarCategoria(nome);
+
+        } else {
+
+            return categoriaService.listarCategorias().get(opcao - 1);
+
+        }
+    }
     public int menu() {
         divisor();
         System.out.println("Seja bem vindo(a) ao ToDoTask! 📋");
@@ -80,21 +109,18 @@ public class ToDoController {
         System.out.println("ToDoTask - Adicione aqui uma nova task: ");
         String nomeTask = lerTask.nextLine();
         divisor();
-        System.out.println("ToDoTask - Digite uma categoria para sua task");
-        String categoria = lerTask.nextLine();
+        Categoria categoria = menuCategorias();
         divisor();
         System.out.println("ToDoTask - Descreva sua Task:");
         String descricao = lerTask.nextLine();
 
-        if (nomeTask.isBlank() || categoria.isBlank()) {
+        if (nomeTask.isBlank()) {
             throw new NullPointerException("Erro ao criar task: parâmetros inválidos, tente novamente. ");
         } else {
             divisor();
             System.out.println("Task " + nomeTask + " registrada com sucesso! ");
             return new Task(ID, nomeTask, categoria, descricao);
         }
-
-
     }
 
     public void listarTasks(ArrayList<Task> tasks) {
@@ -134,25 +160,25 @@ public void editarTask(int ID, ArrayList<Task> tasks) {
         for (Task task : tasks) {
             if (task.getId() == ID) {
                 Scanner lerEdicaoTask = new Scanner(System.in);
-
+                // nome
                 System.out.println("ToDoTask - Altere o nome da task selecionada: ");
                 String nomeEdit = lerEdicaoTask.nextLine();
                 divisor();
-
-
-                System.out.println("ToDoTask - Altere a categoria da task selecionada: ");
-                String categoriaEdit = lerEdicaoTask.nextLine();
+                // categoria
+                System.out.println("ToDoTask - Escolha a nova categoria da task: ");
+                Categoria categoriaEdit = menuCategorias();
                 divisor();
 
                 System.out.println("ToDoTask - Descreva sua Task:");
                 String descricaoEdit = lerEdicaoTask.nextLine();
 
-                if (nomeEdit.isBlank() || categoriaEdit.isBlank()) {
-                    throw new NullPointerException("Erro ao editar task: parâmetros inválidos.");
+                if (nomeEdit.isBlank()) {
+                    throw new IllegalArgumentException("Erro ao editar task: parâmetros inválidos.");
                 }
                 task.setNomeTask(nomeEdit); // nome da task
                 task.setCategoria(categoriaEdit);
                 task.setDescricao(descricaoEdit);
+
                 divisor();
                 System.out.println("Task " + nomeEdit + " editada com sucesso!");
 

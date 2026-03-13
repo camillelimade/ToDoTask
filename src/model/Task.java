@@ -4,10 +4,10 @@ public class Task extends Entidade {
     private int id;
     private String nomeTask;
     private boolean completa = false;
-    private String categoria;
+    private Categoria categoria;
     private String descricao;
 
-    public Task(int id, String texto, String categoria, String descricao) {
+    public Task(int id, String texto, Categoria categoria, String descricao) {
         this.id = id;
         this.nomeTask = texto;
         this.completa = false;
@@ -39,11 +39,11 @@ public class Task extends Entidade {
         this.completa = completa;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
     public String verificaStatus(){
