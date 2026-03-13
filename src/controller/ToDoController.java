@@ -3,22 +3,25 @@ import service.CategoriaService;
 import model.Task;
 import model.Usuario;
 import model.Categoria;
+import service.Completavel;
+import service.TaskService;
+import service.UsuarioService;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ToDoController {
+public class ToDoController implements UsuarioService, Completavel, TaskService {
     private ArrayList<Task> tasks = new ArrayList<>();
     private CategoriaService categoriaService = new CategoriaService();
     public void divisor() {
         System.out.println("-----------------------------------------");
     }
-
-    private boolean emailValido(String email) {
+    // UsuarioService
+    public boolean emailValido(String email) {
         if (email == null) return false;
 
         return email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
     }
-
     public Usuario cadastro() {
         divisor();
         System.out.println("Bem vindo(a) ao Cadastro do ToDoTask! ");
@@ -137,10 +140,10 @@ public class ToDoController {
 
     }
     public void excluirTask(int ID,  ArrayList<Task> tasks) {
-        for (Task task : tasks) {
-            if (task.getId() == ID) {
-                System.out.println("Task "+ task.getNomeTask() +" removida com sucesso! ");
-                tasks.remove(task);
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId() == ID) {
+                System.out.println("Task " + tasks.get(i).getNomeTask() + " removida com sucesso!");
+                tasks.remove(i);
                 return;
             }
         }

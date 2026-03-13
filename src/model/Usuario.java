@@ -12,6 +12,9 @@ public class Usuario extends Entidade{
         this.email = email;
     }
 
+    public Usuario() {
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }
