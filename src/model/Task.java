@@ -1,15 +1,15 @@
 package model;
 
-public class Task {
+public class Task extends Entidade {
     private int id;
-    private String texto;
+    private String nomeTask;
     private boolean completa = false;
     private String categoria;
     private String descricao;
 
     public Task(int id, String texto, String categoria, String descricao) {
         this.id = id;
-        this.texto = texto;
+        this.nomeTask = texto;
         this.completa = false;
         this.categoria = categoria;
         this.descricao = descricao;
@@ -23,12 +23,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getNomeTask() {
+        return nomeTask;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setNomeTask(String nomeTask) {
+        this.nomeTask = nomeTask;
     }
 
     public boolean isCompleta() {
@@ -56,7 +56,7 @@ public class Task {
     @Override
     public String toString() {
         return "ID: " + id + "\n" +
-                "Nome: " + texto + "\n" +
+                "Nome: " + nomeTask + "\n" +
                 "Status: " + verificaStatus() + "\n" +
                 "Categoria: " + categoria + "\n" +
                 "Descrição: " + descricao;

@@ -1,10 +1,7 @@
 package app;
 
 import controller.ToDoController;
-import model.Task;
 import model.Usuario;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {

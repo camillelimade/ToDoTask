@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Usuario {
+public class Usuario extends Entidade{
     private String nome;
     private String email;
     private ArrayList<Task> tasks = new ArrayList<>();

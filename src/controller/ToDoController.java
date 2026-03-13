@@ -78,7 +78,7 @@ public class ToDoController {
     public Task criaTask(int ID) {
         Scanner lerTask = new Scanner(System.in);
         System.out.println("ToDoTask - Adicione aqui uma nova task: ");
-        String texto = lerTask.nextLine();
+        String nomeTask = lerTask.nextLine();
         divisor();
         System.out.println("ToDoTask - Digite uma categoria para sua task");
         String categoria = lerTask.nextLine();
@@ -86,12 +86,12 @@ public class ToDoController {
         System.out.println("ToDoTask - Descreva sua Task:");
         String descricao = lerTask.nextLine();
 
-        if (texto.isBlank() || categoria.isBlank()) {
+        if (nomeTask.isBlank() || categoria.isBlank()) {
             throw new NullPointerException("Erro ao criar task: parâmetros inválidos, tente novamente. ");
         } else {
             divisor();
-            System.out.println("Task " + texto + " registrada com sucesso! ");
-            return new Task(ID, texto, categoria, descricao);
+            System.out.println("Task " + nomeTask + " registrada com sucesso! ");
+            return new Task(ID, nomeTask, categoria, descricao);
         }
 
 
@@ -113,7 +113,7 @@ public class ToDoController {
     public void excluirTask(int ID,  ArrayList<Task> tasks) {
         for (Task task : tasks) {
             if (task.getId() == ID) {
-                System.out.println("Task "+ task.getTexto() +" removida com sucesso! ");
+                System.out.println("Task "+ task.getNomeTask() +" removida com sucesso! ");
                 tasks.remove(task);
                 return;
             }
@@ -124,7 +124,7 @@ public void completaTask(int ID, ArrayList<Task> tasks) {
     for (Task task : tasks) {
         if (task.getId() == ID) {
             task.setCompleta(true);
-            System.out.println("Task " + task.getTexto() + " completada com sucesso! ");
+            System.out.println("Task " + task.getNomeTask() + " completada com sucesso! ");
             return;
         }
     }
@@ -150,7 +150,7 @@ public void editarTask(int ID, ArrayList<Task> tasks) {
                 if (nomeEdit.isBlank() || categoriaEdit.isBlank()) {
                     throw new NullPointerException("Erro ao editar task: parâmetros inválidos.");
                 }
-                task.setTexto(nomeEdit); // nome da task
+                task.setNomeTask(nomeEdit); // nome da task
                 task.setCategoria(categoriaEdit);
                 task.setDescricao(descricaoEdit);
                 divisor();
