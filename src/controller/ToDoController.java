@@ -1,5 +1,6 @@
 package controller;
 
+import model.Status;
 import service.CategoriaService;
 import model.Task;
 import model.Usuario;
@@ -9,12 +10,12 @@ import service.TaskService;
 import service.UsuarioService;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ToDoController implements UsuarioService, Completavel, TaskService {
     private ArrayList<Task> tasks = new ArrayList<>();
     private CategoriaService categoriaService = new CategoriaService();
+    private final Scanner scanner = new Scanner(System.in);
 
     public void divisor() {
         System.out.println("-----------------------------------------");
@@ -31,13 +32,12 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         divisor();
         System.out.println("Bem vindo(a) ao Cadastro do ToDoTask! ");
         divisor();
-        Scanner cadUser = new Scanner(System.in);
 
         System.out.println("Digite seu nome: ");
-        String nomeUser = cadUser.nextLine();
+        String nomeUser = scanner.nextLine();
 
         System.out.println("Digite seu e-mail: ");
-        String emailUser = cadUser.nextLine();
+        String emailUser = scanner.nextLine();
         // validação de entradas
 
         if (nomeUser.isBlank() || emailUser.isBlank() || !emailValido(emailUser)) {
@@ -68,7 +68,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
                 System.out.println("Digite um número válido.");
                 continue;
             }
-            if (opcao == 1){
+            if (opcao == i){
                 System.out.println("Digite o nome da nova categoria:");
                 String nome = scanner.nextLine();
                 if (!nome.isBlank()) {
@@ -77,7 +77,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
                 System.out.println("Nome inválido. Tente novamente.");
                 continue;
             }
-            if (opcao > 0 && opcao < i){
+            if (opcao > 0 && opcao <= i){
                 return categoriaService.listarCategorias().get(opcao - 1);
             }
             System.out.println("Opção inválida. Tente novamente.");
@@ -114,33 +114,30 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
 
         while (true) {
             // recebe entrada do usuário
-            Scanner leitor = new Scanner(System.in);
             System.out.println("Digite o indice da opção desejada: ");
             // validação de tipo de entrada
-            if (leitor.hasNextInt()) {
-                opcao = leitor.nextInt();
-                leitor.nextLine();
+            if (scanner.hasNextInt()) {
+                opcao = scanner.nextInt();
+                scanner.nextLine();
                 divisor();
                 break;
             } else {
                 divisor();
                 System.out.println("Digite uma entrada válida! Tente novamente.");
                 divisor();
-                leitor.nextLine();
+                scanner.nextLine();
             }
         }
         return opcao;
     }
 
     public Task criaTask(int ID) {
-        // cria Scanner da função
-        Scanner lerTask = new Scanner(System.in);
         // cria nome da Task
-        String nomeTask = null;
+        String nomeTask;
         while (true) {
             // recebe nome da task
             System.out.println("ToDoTask - Adicione aqui o nome de sua task: ");
-            nomeTask = lerTask.nextLine();
+            nomeTask = scanner.nextLine();
             // lê e trata
             if (nomeTask.isBlank()) {
                 divisor();
@@ -159,7 +156,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         while (true) {
             // recebe descricao da task
             System.out.println("ToDoTask - Descreva sua Task: ");
-            descricao = lerTask.nextLine();
+            descricao = scanner.nextLine();
             // lê e trata
             if (descricao.isBlank()) {
                 divisor();
@@ -192,7 +189,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         // int indice = ID - 1;
         for (Task task : tasks) {
             if (task.getId() == ID) {
-                task.setCompleta(true);
+                task.setStatus(Status.CONCLUIDA);
                 System.out.println("Task " + task.getNomeTask() + " completada com sucesso! ");
                 return;
             }
@@ -203,10 +200,9 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
     public void editarTask(int ID, ArrayList<Task> tasks) {
         for (Task task : tasks) {
             if (task.getId() == ID) {
-                Scanner lerEdicaoTask = new Scanner(System.in);
                 // nome
                 System.out.println("ToDoTask - Altere o nome da task selecionada: ");
-                String nomeEdit = lerEdicaoTask.nextLine();
+                String nomeEdit = scanner.nextLine();
                 divisor();
                 // categoria
                 System.out.println("ToDoTask - Escolha a nova categoria da task: ");
@@ -214,7 +210,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
                 divisor();
 
                 System.out.println("ToDoTask - Descreva sua Task:");
-                String descricaoEdit = lerEdicaoTask.nextLine();
+                String descricaoEdit = scanner.nextLine();
 
                 if (nomeEdit.isBlank()) {
                     throw new IllegalArgumentException("Erro ao editar task: parâmetros inválidos.");
