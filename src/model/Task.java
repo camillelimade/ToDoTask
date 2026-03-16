@@ -1,18 +1,28 @@
 package model;
 
-public class Task {
+public class Task extends Entidade {
     private int id;
-    private String texto;
+    private String nomeTask;
     private boolean completa = false;
-    private String categoria;
+    private Categoria categoria;
     private String descricao;
+    private Status status;
 
-    public Task(int id, String texto, String categoria, String descricao) {
+    public Task(int id, String texto, Categoria categoria, String descricao) {
         this.id = id;
-        this.texto = texto;
+        this.nomeTask = texto;
         this.completa = false;
         this.categoria = categoria;
         this.descricao = descricao;
+        this.status = Status.PENDENTE;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -23,12 +33,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getNomeTask() {
+        return nomeTask;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setNomeTask(String nomeTask) {
+        this.nomeTask = nomeTask;
     }
 
     public boolean isCompleta() {
@@ -39,27 +49,20 @@ public class Task {
         this.completa = completa;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-    public String verificaStatus(){
-        if (isCompleta()){
-            return "Completa";
-        }else {
-            return "Incompleta";
-        }
     }
     @Override
     public String toString() {
         return "ID: " + id + "\n" +
-                "Nome: " + texto + "\n" +
-                "Status: " + verificaStatus() + "\n" +
-                "Categoria: " + categoria + "\n" +
-                "Descrição: " + descricao;
+                "Task: " + nomeTask + "\n" +
+                "Categoria: " + categoria.getNome() + "\n" +
+                "Descrição: " + descricao + "\n" +
+                "Status: " + status;
     }
 
     public String getDescricao() {
