@@ -70,6 +70,7 @@ public class Main {
                         try {
                             System.out.println("Digite o ID da task que deseja excluir: ");
                             taskId = input.nextInt();
+                            input.nextLine(); // limpa buffer
                         } catch (InputMismatchException e) {
                             // pega entrada errada
                             input.nextLine();
@@ -78,6 +79,7 @@ public class Main {
                             continue;
                         }
                         if (taskId <= 0) {
+                            executar.divisor();
                             System.out.println("Digite um ID válido.");
                             continue;
                         }
