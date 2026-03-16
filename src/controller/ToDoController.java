@@ -8,6 +8,7 @@ import service.TaskService;
 import service.UsuarioService;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ToDoController implements UsuarioService, Completavel, TaskService {
@@ -100,7 +101,9 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
                 divisor();
                 break;
             } else {
+                divisor();
                 System.out.println("Digite uma entrada válida! Tente novamente.");
+                divisor();
                 leitor.nextLine();
             }
         }
@@ -108,22 +111,43 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
     }
 
     public Task criaTask(int ID) {
+        // cria Scanner da função
         Scanner lerTask = new Scanner(System.in);
-        System.out.println("ToDoTask - Adicione aqui uma nova task: ");
-        String nomeTask = lerTask.nextLine();
+        // cria nome da Task
+        String nomeTask = null;
+        while (true){
+            // recebe nome da task
+            System.out.println("ToDoTask - Adicione aqui o nome de sua task: ");
+            nomeTask = lerTask.nextLine();
+            // lê e trata
+            if (nomeTask.isBlank()) {
+                divisor();
+                System.out.println("O nome da task não pode ser vazio. Tente novamente.");
+                divisor();
+            }else {
+                break;
+            }
+    }
         divisor();
+        // recebe categoria, com o menu da própria entidade por meio da função chamada
         Categoria categoria = menuCategorias();
         divisor();
-        System.out.println("ToDoTask - Descreva sua Task:");
-        String descricao = lerTask.nextLine();
-
-        if (nomeTask.isBlank()) {
-            throw new NullPointerException("Erro ao criar task: parâmetros inválidos, tente novamente. ");
-        } else {
-            divisor();
-            System.out.println("Task " + nomeTask + " registrada com sucesso! ");
-            return new Task(ID, nomeTask, categoria, descricao);
+        // cria variavel de descricao
+        String descricao;
+        while(true){
+            // recebe descricao da task
+            System.out.println("ToDoTask - Descreva sua Task: ");
+            descricao = lerTask.nextLine();
+            // lê e trata
+            if (descricao.isBlank()) {
+                System.out.println("A descrição não pode estar vazia. Tente novamente.");
+            }else {
+                break;
+            }
         }
+        divisor();
+        System.out.println("Task " + nomeTask + " registrada com sucesso! ");
+        return new Task(ID, nomeTask, categoria, descricao);
     }
 
     public void listarTasks(ArrayList<Task> tasks) {
