@@ -1,4 +1,5 @@
 package controller;
+
 import service.CategoriaService;
 import model.Task;
 import model.Usuario;
@@ -14,15 +15,18 @@ import java.util.Scanner;
 public class ToDoController implements UsuarioService, Completavel, TaskService {
     private ArrayList<Task> tasks = new ArrayList<>();
     private CategoriaService categoriaService = new CategoriaService();
+
     public void divisor() {
         System.out.println("-----------------------------------------");
     }
+
     // UsuarioService
     public boolean emailValido(String email) {
         if (email == null) return false;
 
         return email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
     }
+
     public Usuario cadastro() {
         divisor();
         System.out.println("Bem vindo(a) ao Cadastro do ToDoTask! ");
@@ -45,6 +49,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         }
 
     }
+
     public Categoria menuCategorias() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escolha uma categoria:");
@@ -61,19 +66,33 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         if (opcao == i) {
             System.out.println("Digite o nome da nova categoria:");
             String nome = scanner.nextLine();
-            if (!(nome.isBlank())){
+            if (!(nome.isBlank())) {
                 // se o nome NÃO for vazio executa
                 return categoriaService.criarCategoria(nome);
             }
             System.out.println("Nome não pode ser vazio, nem inválido. Tente novamente.");
             return null;
         }
-        if (opcao > 0 && opcao < i){
+        if (opcao > 0 && opcao < i) {
             return categoriaService.listarCategorias().get(opcao - 1);
         }
         System.out.println("Opção inválida. Tente novamente.");
         return null;
     }
+
+    public void excluirTask(int ID, ArrayList<Task> tasks) {
+        // verifica se o ID é válido
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId() == ID) {
+                System.out.println("Task " + tasks.get(i).getNomeTask() + " removida com sucesso!");
+                tasks.remove(i);
+                return;
+            }
+        }
+        System.out.println("Task com ID " + ID + " não encontrada. Tente novamente.");
+    }
+
+
     public int menu() {
         divisor();
         System.out.println("Seja bem vindo(a) ao ToDoTask! 📋");
@@ -114,7 +133,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         Scanner lerTask = new Scanner(System.in);
         // cria nome da Task
         String nomeTask = null;
-        while (true){
+        while (true) {
             // recebe nome da task
             System.out.println("ToDoTask - Adicione aqui o nome de sua task: ");
             nomeTask = lerTask.nextLine();
@@ -123,24 +142,24 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
                 divisor();
                 System.out.println("O nome da task não pode ser vazio. Tente novamente.");
                 divisor();
-            }else {
+            } else {
                 break;
             }
-    }
+        }
         divisor();
         // recebe categoria, com o menu da própria entidade por meio da função chamada
         Categoria categoria = menuCategorias();
         divisor();
         // cria variavel de descricao
         String descricao;
-        while(true){
+        while (true) {
             // recebe descricao da task
             System.out.println("ToDoTask - Descreva sua Task: ");
             descricao = lerTask.nextLine();
             // lê e trata
             if (descricao.isBlank()) {
                 System.out.println("A descrição não pode estar vazia. Tente novamente.");
-            }else {
+            } else {
                 break;
             }
         }
@@ -162,27 +181,20 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         }
 
     }
-    public void excluirTask(int ID,  ArrayList<Task> tasks) {
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId() == ID) {
-                System.out.println("Task " + tasks.get(i).getNomeTask() + " removida com sucesso!");
-                tasks.remove(i);
+
+    public void completaTask(int ID, ArrayList<Task> tasks) {
+        // int indice = ID - 1;
+        for (Task task : tasks) {
+            if (task.getId() == ID) {
+                task.setCompleta(true);
+                System.out.println("Task " + task.getNomeTask() + " completada com sucesso! ");
                 return;
             }
         }
+        System.out.println("Não foi possível completar a Task! Tente novamente.");
     }
-public void completaTask(int ID, ArrayList<Task> tasks) {
-        // int indice = ID - 1;
-    for (Task task : tasks) {
-        if (task.getId() == ID) {
-            task.setCompleta(true);
-            System.out.println("Task " + task.getNomeTask() + " completada com sucesso! ");
-            return;
-        }
-    }
-    System.out.println("Não foi possível completar a Task! Tente novamente.");
-}
-public void editarTask(int ID, ArrayList<Task> tasks) {
+
+    public void editarTask(int ID, ArrayList<Task> tasks) {
         for (Task task : tasks) {
             if (task.getId() == ID) {
                 Scanner lerEdicaoTask = new Scanner(System.in);
@@ -212,8 +224,8 @@ public void editarTask(int ID, ArrayList<Task> tasks) {
             }
         }
         divisor();
-    System.out.println("Task não encontrada.");
-    divisor();
-}
+        System.out.println("Task não encontrada.");
+        divisor();
+    }
 
 }

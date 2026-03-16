@@ -53,9 +53,22 @@ public class Main {
                         break;
                     case 3:
                         // 3 - Excluir task
-                        System.out.println("Digite o ID da task que deseja excluir: ");
-                        int taskId = input.nextInt();
-                        input.nextLine();
+                        // Tratamento de erros [ ]
+                        int taskId = 0;
+                        try {
+                            System.out.println("Digite o ID da task que deseja excluir: ");
+                            taskId = input.nextInt();
+                        } catch (InputMismatchException e) {
+                            // pega entrada errada
+                            input.nextLine();
+                            executar.divisor();
+                            System.out.println("Digite uma entrada númerica válida. Tente novamente.");
+                            continue;
+                        }
+                        if (taskId <= 0) {
+                            System.out.println("Digite um ID válido.");
+                            continue;
+                        }
                         executar.excluirTask(taskId, novoUsuario.getTasks());
                         break;
                     case 4:
