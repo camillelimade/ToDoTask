@@ -46,6 +46,31 @@ Essa refatoração contribuiu para uma melhor organização e visualização da 
 - **Git** — controle de versão
 - **GitHub** — hospedagem do repositório e gerenciamento de versões
 
+## Estrutura de Diretórios
+
+Uma representação simplificada da estrutura do projeto:
+```
+src
+├─ app
+│ └─ Main
+│
+├─ controller
+│ └─ ToDoController
+│
+├─ model
+│ ├─ Categoria
+│ ├─ Entidade
+│ ├─ Status
+│ ├─ Task
+│ └─ Usuario
+│
+└─ service
+├─ CategoriaService
+├─ Completable
+├─ TaskService
+└─ UsuarioService
+```
+
 ## Entidades do Sistema
 ### app
 Responsável pela execução principal do sistema. Esse pacote foi utilizado inicialmente devido à ausência de uma interface gráfica. Em versões futuras, a ideia é que ele evolua para um pacote `view`, responsável pela interação com o usuário.
