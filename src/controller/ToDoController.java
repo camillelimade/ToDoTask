@@ -46,34 +46,33 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
 
     }
     public Categoria menuCategorias() {
-
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Escolha uma categoria:");
-
         int i = 1;
         for (Categoria cat : categoriaService.listarCategorias()) {
             System.out.println(i + ". " + cat.getNome());
             i++;
         }
-
         System.out.println(i + ". Criar nova categoria");
 
         int opcao = scanner.nextInt();
         scanner.nextLine();
 
         if (opcao == i) {
-
             System.out.println("Digite o nome da nova categoria:");
             String nome = scanner.nextLine();
-
-            return categoriaService.criarCategoria(nome);
-
-        } else {
-
-            return categoriaService.listarCategorias().get(opcao - 1);
-
+            if (!(nome.isBlank())){
+                // se o nome NÃO for vazio executa
+                return categoriaService.criarCategoria(nome);
+            }
+            System.out.println("Nome não pode ser vazio, nem inválido. Tente novamente.");
+            return null;
         }
+        if (opcao > 0 && opcao < i){
+            return categoriaService.listarCategorias().get(opcao - 1);
+        }
+        System.out.println("Opção inválida. Tente novamente.");
+        return null;
     }
     public int menu() {
         divisor();
@@ -212,7 +211,9 @@ public void editarTask(int ID, ArrayList<Task> tasks) {
                 return;
             }
         }
+        divisor();
     System.out.println("Task não encontrada.");
+    divisor();
 }
 
 }

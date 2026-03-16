@@ -2,6 +2,8 @@ package app;
 
 import controller.ToDoController;
 import model.Usuario;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -28,14 +30,25 @@ public class Main {
                 switch (opcao){
                     case 1:
                         // 1 - Criar task
+                        // Tratamento de erros [x]
                         novoUsuario.getTasks().add(executar.criaTask(idTask));
                         idTask++;
                         break;
                     case 2:
                         // 2 - Editar task
-                        System.out.println("Digite o ID da task que deseja editar: ");
-                        int idEditar = input.nextInt();
-                        input.nextLine(); // fix: limpa buffer
+                        // Tratamento de erros [x]
+                        int idEditar = 0;
+                        try {
+                            // tenta receber o ID para edição
+                            System.out.println("Digite o ID da task que deseja editar: ");
+                            idEditar = input.nextInt();
+                        } catch (InputMismatchException e) {
+                            // pega a entrada errada e retorna mensagem
+                            input.nextLine(); // fix: limpa buffer
+                            executar.divisor();
+                            System.out.println("Digite uma entrada númerica válida. Tente novamente.");
+                            continue;
+                        }
                         executar.editarTask(idEditar, novoUsuario.getTasks());
                         break;
                     case 3:
