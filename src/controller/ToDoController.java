@@ -158,7 +158,9 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
             descricao = lerTask.nextLine();
             // lê e trata
             if (descricao.isBlank()) {
+                divisor();
                 System.out.println("A descrição não pode estar vazia. Tente novamente.");
+                divisor();
             } else {
                 break;
             }

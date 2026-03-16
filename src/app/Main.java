@@ -37,19 +37,31 @@ public class Main {
                     case 2:
                         // 2 - Editar task
                         // Tratamento de erros [x]
-                        int idEditar = 0;
-                        try {
-                            // tenta receber o ID para edição
-                            System.out.println("Digite o ID da task que deseja editar: ");
-                            idEditar = input.nextInt();
-                        } catch (InputMismatchException e) {
-                            // pega a entrada errada e retorna mensagem
-                            input.nextLine(); // fix: limpa buffer
+                        System.out.println("Digite o ID da Task que deseja editar: ");
+                        String entrada = input.nextLine();
+
+                        if (entrada.isBlank()){
                             executar.divisor();
-                            System.out.println("Digite uma entrada númerica válida. Tente novamente.");
+                            System.out.println("O ID não pode ser vazio. Tente novamente.");
+                            executar.divisor();
                             continue;
                         }
-                        executar.editarTask(idEditar, novoUsuario.getTasks());
+                        int idEditar; // variavel que guarda a conversão
+                        try{
+                            // tenta converter pra Int
+                            idEditar = Integer.parseInt(entrada);
+                        }catch (NumberFormatException e) {
+                            // se não consegue é pq digitaram algum texto
+                            executar.divisor();
+                            System.out.println("Digite um número válido. Tente novamente.");
+                            executar.divisor();
+                            continue;
+                        }
+                        if (idEditar <= 0) {
+                            System.out.println("Digite um ID válido.");
+                            continue;
+                        }
+                         executar.editarTask(idEditar, novoUsuario.getTasks());
                         break;
                     case 3:
                         // 3 - Excluir task
