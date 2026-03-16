@@ -88,8 +88,28 @@ public class Main {
                     case 4:
                         // 4 - Completar task
                         System.out.println("Digite o ID da Task que deseja completar: ");
-                        int idTaskComplete = input.nextInt();
-                        input.nextLine();
+                        String entradaComplete = input.nextLine();
+                        if(entradaComplete.isBlank()){
+                            executar.divisor();
+                            System.out.println("O ID não pode ser vazio. Tente novamente.");
+                            executar.divisor();
+                            continue;
+                        }
+                        int idTaskComplete;
+                        try{
+                            idTaskComplete = Integer.parseInt(entradaComplete);
+                        }catch (NumberFormatException e){
+                            executar.divisor();
+                            System.out.println("Digite um número válido.");
+                            executar.divisor();
+                            continue;
+                    }
+                        if (idTaskComplete <=0){
+                            executar.divisor();
+                            System.out.println("Digite um ID válido.");
+                            executar.divisor();
+                            continue;
+                        }
                         executar.completaTask(idTaskComplete, novoUsuario.getTasks());
                         break;
                     case 5:
