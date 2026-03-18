@@ -17,28 +17,28 @@ O _ToDoTask_ permite que usuários cadastrem e gerenciem suas próprias tarefas 
 ## Conceitos aplicados
 
 Durante o desenvolvimento do projeto foram utilizados conceitos essenciais de Java
-### Versão 1
-- Classes
-- Atributos
-- Métodos
-- Construtores
-- Encapsulamento
-- Relação entre entidades (Usuário → Tasks)
-
-### Versão 2
-- Herança
-- Polimorfismo
-- Interfaces
-- Classes abstratas
 
 ## Versões
 
 ### V1
 Primeira implementação do **ToDoTask**, consistindo em um sistema **CRUD executado via console**. Essa versão contém as funcionalidades básicas necessárias para a manipulação das tarefas registradas por cada usuário.
+*Conceitos Aplicados*:
+- Classes
+- Atributos
+- Métodos
+- Construtores
+- Encapsulamento
+- Relação entre entidades (Usuário → Tasks) 
 
 ### V2
 Na segunda versão foram aplicados conceitos avançados de POO, como Herança, Polimorfismo, Interfaces e Classes Abstratas.
 Essa refatoração contribuiu para uma melhor organização e visualização da estrutura do sistema, incluindo a criação de novos pacotes que auxiliam na separação de responsabilidades dentro do projeto.
+
+*Conceitos Aplicados*:
+- Herança
+- Polimorfismo
+- Interfaces
+- Classes abstratas
 
 ## Ferramentas e Tecnologias
 - **Java 21 LTS** — linguagem principal utilizada no desenvolvimento
@@ -106,6 +106,7 @@ Pacote responsável por concentrar a lógica relacionada à manipulação das en
 A estrutura atual do sistema foi pensada para facilitar futuras expansões, como:
 
 - Integração com banco de dados
+- Uso de frameworks e aplicação de bibliotecas
 - Separação mais clara de camadas da aplicação
 - Implementação de uma interface gráfica
 - Expansão das regras de negócio do sistema
