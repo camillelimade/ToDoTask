@@ -210,16 +210,14 @@ public class ToDoController implements UsuarioService, Completavel, TaskService,
                 // instancia task
                 Task novaTask = new Task(id, nomeTask, categoria, descricao);
                 // agrega task a projeto
-                novaTask.setProjeto(projeto);
+                projeto.adicionarTask(novaTask);
                 // avisa ação anterior
                 divisor();
                 System.out.println("Task " + nomeTask + "adicionada ao Projeto " + projeto.getNome() + " com sucesso!");
                 // retorna resultado da função
                 return novaTask;
             }
-
         }
-        return null;
     }
 
     public void completaTask(int ID, ArrayList<Task> tasks) {
