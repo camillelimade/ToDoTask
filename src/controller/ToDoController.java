@@ -179,6 +179,49 @@ public class ToDoController implements UsuarioService, Completavel, TaskService,
 
     }
 
+    @Override
+    public Task criaTaskProjeto(int id, Projeto projeto) {
+        String nomeTask;
+        while (true) {
+            // recebe nome da Task
+            System.out.println("Nome da Task: ");
+            nomeTask = scanner.nextLine();
+            // verifica nome da Task
+            if (nomeTask.isBlank()) {
+                divisor();
+                System.out.println("O nome da Task não pode ser vazio. Tente novamente.");
+                divisor();
+                continue;
+            }
+            // recebe categoria da task
+            Categoria categoria = menuCategorias();
+            String descricao;
+            while (true) {
+            // recebe descricao
+                System.out.println("Descrição da Task: ");
+                descricao = scanner.nextLine();
+                // verifica nome da Task
+                if (descricao.isBlank()) {
+                    divisor();
+                    System.out.println("A descrição não pode ser vazia. Tente novamente.");
+                    divisor();
+                    continue;
+                }
+                // instancia task
+                Task novaTask = new Task(id, nomeTask, categoria, descricao);
+                // agrega task a projeto
+                novaTask.setProjeto(projeto);
+                // avisa ação anterior
+                divisor();
+                System.out.println("Task " + nomeTask + "adicionada ao Projeto " + projeto.getNome() + " com sucesso!");
+                // retorna resultado da função
+                return novaTask;
+            }
+
+        }
+        return null;
+    }
+
     public void completaTask(int ID, ArrayList<Task> tasks) {
         // int indice = ID - 1;
         for (Task task : tasks) {
@@ -259,7 +302,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService,
 
     @Override
     public void listaProjetos(Usuario usuario) {
-        if (listaVazia(usuario)){
+        if (listaVazia(usuario)) {
             divisor();
             System.out.println("Os Projetos de  " + usuario.getNome() + " não foram encontrados.");
             divisor();
