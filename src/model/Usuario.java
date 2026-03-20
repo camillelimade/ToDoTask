@@ -12,6 +12,10 @@ public class Usuario extends Entidade{
         this.nome = nome;
         this.email = email;
     }
+
+    public String getNome() {
+        return nome;
+    }
     public void adicionarProjeto(Projeto projeto) {
         projetos.add(projeto);
     }

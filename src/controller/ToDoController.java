@@ -1,18 +1,12 @@
 package controller;
 
-import model.Status;
-import service.CategoriaService;
-import model.Task;
-import model.Usuario;
-import model.Categoria;
-import service.Completavel;
-import service.TaskService;
-import service.UsuarioService;
+import model.*;
+import service.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ToDoController implements UsuarioService, Completavel, TaskService {
+public class ToDoController implements UsuarioService, Completavel, TaskService, ProjetoService {
     private ArrayList<Task> tasks = new ArrayList<>();
     private CategoriaService categoriaService = new CategoriaService();
     private final Scanner scanner = new Scanner(System.in);
@@ -52,23 +46,23 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
 
     public Categoria menuCategorias() {
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        while (true) {
             System.out.println("Escolha uma categoria:");
             int i = 1;
-            for (Categoria cat : categoriaService.listarCategorias()){
+            for (Categoria cat : categoriaService.listarCategorias()) {
                 System.out.println(i + ". " + cat.getNome());
                 i++;
             }
             System.out.println(i + ". Criar nova categoria");
             String entrada = scanner.nextLine();
             int opcao;
-            try{
+            try {
                 opcao = Integer.parseInt(entrada);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Digite um número válido.");
                 continue;
             }
-            if (opcao == i){
+            if (opcao == i) {
                 System.out.println("Digite o nome da nova categoria:");
                 String nome = scanner.nextLine();
                 if (!nome.isBlank()) {
@@ -77,7 +71,7 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
                 System.out.println("Nome inválido. Tente novamente.");
                 continue;
             }
-            if (opcao > 0 && opcao <= i){
+            if (opcao > 0 && opcao <= i) {
                 return categoriaService.listarCategorias().get(opcao - 1);
             }
             System.out.println("Opção inválida. Tente novamente.");
@@ -230,4 +224,52 @@ public class ToDoController implements UsuarioService, Completavel, TaskService 
         divisor();
     }
 
+    @Override
+    public Projeto criaProjeto(int id, Usuario usuario) {
+        while (true) {
+            // recebe nome do projeto
+            System.out.println("Nome do Projeto: ");
+            String nomeProj = scanner.nextLine();
+            // verifica o nome do projeto
+            if (nomeProj.isBlank()) {
+                divisor();
+                System.out.println("O nome do projeto não pode ser vazio. Tente novamente.");
+                divisor();
+                continue;
+            }
+            // pós verificação, instancia novo Projeto
+            Projeto projeto = new Projeto(id, nomeProj);
+            // associa projeto ao usuário
+            usuario.adicionarProjeto(projeto);
+            // avisa sobre a ação anterior
+            divisor();
+            System.out.println("Projeto " + projeto.getNome() + " criado com sucesso!");
+            divisor();
+            // retorna resultado da função
+            return projeto;
+        }
+    }
+
+    @Override
+    public boolean listaVazia(Usuario usuario) {
+        return usuario.getProjetos().isEmpty();
+        // se true -> lista vazia
+        // se false -> lista povoada
+    }
+
+    @Override
+    public void listaProjetos(Usuario usuario) {
+        if (listaVazia(usuario)){
+            divisor();
+            System.out.println("Os Projetos de  " + usuario.getNome() + " não foram encontrados.");
+            divisor();
+            return;
+        }
+        System.out.println("ToDoTask - Aqui estão os Projetos de " + usuario.getNome());
+        divisor(); // separa mensagem dos projetos
+        for (Projeto projeto : usuario.getProjetos()) {
+            System.out.println("Projeto: " + projeto.getNome());
+            divisor(); // separa um projeto do outro
+        }
+    }
 }
