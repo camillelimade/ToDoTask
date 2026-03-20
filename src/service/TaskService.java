@@ -7,6 +7,7 @@ public interface TaskService {
     void editarTask(int ID, ArrayList<Task> tasks);
     void excluirTask(int ID,  ArrayList<Task> tasks);
     void listarTasks(ArrayList<Task> tasks);
+    void completaTask(int ID, ArrayList<Task> tasks);
     // começo dos métodos que se referem ao agregamento de tasks em projetos
     public Task criaTaskProjeto(int id, Projeto projeto);
 }

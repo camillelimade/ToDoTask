@@ -6,7 +6,7 @@ import service.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ToDoController implements UsuarioService, Completavel, TaskService, ProjetoService {
+public class ToDoController implements UsuarioService, TaskService, ProjetoService {
     private ArrayList<Task> tasks = new ArrayList<>();
     private CategoriaService categoriaService = new CategoriaService();
     private final Scanner scanner = new Scanner(System.in);
@@ -297,7 +297,6 @@ public class ToDoController implements UsuarioService, Completavel, TaskService,
         // se true -> lista vazia
         // se false -> lista povoada
     }
-
     @Override
     public void listaProjetos(Usuario usuario) {
         if (listaVazia(usuario)) {
