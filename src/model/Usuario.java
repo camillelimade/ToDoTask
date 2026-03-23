@@ -29,6 +29,22 @@ public class Usuario extends Entidade implements Autenticavel{
     public Usuario() {
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }

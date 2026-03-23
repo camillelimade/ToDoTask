@@ -48,19 +48,22 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
     }
 
     @Override
-    public Usuario login(Usuario usuario) {
+    public Usuario login(String email, String senha) {
         while (true) {
             // recebe atributos
+            divisor();
             System.out.println("Digite seu e-mail: ");
             String email = scanner.nextLine();
-
+            divisor();
             System.out.println("Digite sua senha: ");
             String senha = scanner.nextLine();
+            divisor();
             if (email.isBlank() || senha.isBlank()) {
                 System.out.println("O e-mail e senha não podem ser vazios. Tente novamente.");
                 continue;
             }
             if (usuario.autenticar(email, senha)) {
+                divisor();
                 System.out.println("Login de " + usuario.getNome() + " realizado com sucesso!");
                 return usuario;
             } else {

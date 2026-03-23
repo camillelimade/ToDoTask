@@ -30,7 +30,7 @@ public class Main {
                 System.out.println("Erro no cadastro: " + e.getMessage());
                 return;
             }
-            Usuario usuarioLogado = executar.login(novoUsuario);
+            Usuario usuarioLogado = executar.login(novoUsuario.getEmail(), novoUsuario.getSenha());
 
             if (usuarioLogado == null) {
                 System.out.println("Encerrando sistema...");
