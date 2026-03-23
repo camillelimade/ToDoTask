@@ -4,7 +4,6 @@ import controller.ToDoController;
 import model.Projeto;
 import model.Usuario;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
