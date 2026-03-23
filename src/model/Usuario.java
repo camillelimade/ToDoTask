@@ -1,16 +1,20 @@
 package model;
 
+import service.Autenticavel;
+
 import java.util.ArrayList;
 
-public class Usuario extends Entidade{
+public class Usuario extends Entidade implements Autenticavel{
     private String nome;
     private String email;
+    private String senha;
     private ArrayList<Task> tasks = new ArrayList<>();
     private ArrayList<Projeto> projetos = new ArrayList<>();
 
-    public Usuario(String nome, String email) {
+    public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -29,8 +33,8 @@ public class Usuario extends Entidade{
         return tasks;
     }
 
-    public static void main(String[] args) {
-
-
+    @Override
+    public boolean autenticar(String email, String senha) {
+        return this.email.equals(email) && this.senha.equals(senha);
     }
 }

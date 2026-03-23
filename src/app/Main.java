@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+
     public static int pedirID(Scanner input) {
         System.out.println("Digite o ID:");
         return Integer.parseInt(input.nextLine());
@@ -20,20 +21,30 @@ public class Main {
         boolean desejaContinuar = true;
         int idTask = 1;
 
-        Usuario novoUsuario;
-        try {
-            novoUsuario = executar.cadastro();
-        } catch (Exception e) {
-            System.out.println("Erro no cadastro: " + e.getMessage());
-            return;
+        boolean usuarioNaoCriado = true;
+        Usuario novoUsuario = null;
+        while (usuarioNaoCriado) {
+            try {
+                novoUsuario = executar.cadastro();
+            } catch (Exception e) {
+                System.out.println("Erro no cadastro: " + e.getMessage());
+                return;
+            }
+            Usuario usuarioLogado = executar.login(novoUsuario);
+
+            if (usuarioLogado == null) {
+                System.out.println("Encerrando sistema...");
+                return;
+            } else {
+                usuarioNaoCriado = false;
+            }
+
         }
         // execução do menu principal do gerenciador
         int idProjeto = 1;
         while (desejaContinuar) {
             executar.divisor();
-            executar.menuProjetos();
-            int opcao = input.nextInt();
-            input.nextLine(); // limpa buffer
+            int opcao = executar.menuProjetos();
             switch (opcao) {
                 case 1: // cria projetos
                     executar.criaProjeto(idProjeto, novoUsuario);
@@ -58,10 +69,14 @@ public class Main {
                     System.out.println("Escolha o projeto: ");
                     int escolha = input.nextInt();
                     input.nextLine();
+                    if (escolha <= 0 || escolha > novoUsuario.getProjetos().size()) {
+                        System.out.println("Opção inválida.");
+                        break;
+                    }
                     Projeto projetoEscolhido = novoUsuario.getProjetos().get(escolha - 1);
                     boolean dentroProjeto = true;
                     while (dentroProjeto) {
-                        int opTask = executar.menu(novoUsuario, projetoEscolhido); // menu antigo para a manipulação de tasks
+                        int opTask = executar.menu(projetoEscolhido); // menu antigo para a manipulação de tasks
                         switch (opTask) {
                             case 1:
                                 // cria nova task
@@ -100,6 +115,7 @@ public class Main {
                                 break;
                         }
                     }
+                    break;
                 case 4:
                     desejaContinuar = false;
                     System.out.println("Encerrando...");

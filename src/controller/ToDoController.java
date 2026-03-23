@@ -32,6 +32,9 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
 
         System.out.println("Digite seu e-mail: ");
         String emailUser = scanner.nextLine();
+
+        System.out.println("Digite sua senha: ");
+        String senhaUser = scanner.nextLine();
         // validação de entradas
 
         if (nomeUser.isBlank() || emailUser.isBlank() || !emailValido(emailUser)) {
@@ -39,13 +42,34 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
         } else {
             divisor();
             System.out.println("Parabéns " + nomeUser + ", você foi cadastrado(a) com sucesso!");
-            return new Usuario(nomeUser, emailUser);
+            return new Usuario(nomeUser, emailUser, senhaUser);
         }
 
     }
 
+    @Override
+    public Usuario login(Usuario usuario) {
+        while (true) {
+            // recebe atributos
+            System.out.println("Digite seu e-mail: ");
+            String email = scanner.nextLine();
+
+            System.out.println("Digite sua senha: ");
+            String senha = scanner.nextLine();
+            if (email.isBlank() || senha.isBlank()) {
+                System.out.println("O e-mail e senha não podem ser vazios. Tente novamente.");
+                continue;
+            }
+            if (usuario.autenticar(email, senha)) {
+                System.out.println("Login de " + usuario.getNome() + " realizado com sucesso!");
+                return usuario;
+            } else {
+                System.out.println("Erro no Login: E-mail ou Senha inválidos. Tente novamente.");
+            }
+        }
+    }
+
     public Categoria menuCategorias() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
 
             int i = 1;
@@ -95,12 +119,12 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
     }
 
 
-    public int menu(Usuario usuario, Projeto projeto) {
+    public int menu(Projeto projeto) {
         divisor();
         System.out.println("Seja bem vindo(a) ao ToDoTask! 📋");
         divisor();
         System.out.println("--- Esse é o seu gerenciador de Task's! ---\n" +
-                 "--- Projeto: " + projeto.getNome() + "\n" +
+                "--- Projeto: " + projeto.getNome() + "\n" +
                 " 1. Criar uma nova task\n" +
                 " 2. Editar task\n" +
                 " 3. Excluir task\n" +
@@ -175,7 +199,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
             System.out.println("Erro ao listar: Não foi encontrado nenhuma task registrada. ");
             return;
         }
-        System.out.println("ToDoTask — Sua lista de Task's | Projeto " + projeto.getNome() );
+        System.out.println("ToDoTask — Sua lista de Task's | Projeto " + projeto.getNome());
         divisor();
         for (Task task : tasks) {
             System.out.println(task.toString());
@@ -202,7 +226,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
             Categoria categoria = menuCategorias();
             String descricao;
             while (true) {
-            // recebe descricao
+                // recebe descricao
                 divisor();
                 System.out.println("Descrição da Task: ");
                 divisor();
@@ -216,6 +240,8 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
                 }
                 // instancia task
                 Task novaTask = new Task(id, nomeTask, categoria, descricao);
+                // set a task em projeto
+                novaTask.setProjeto(projeto);
                 // agrega task a projeto
                 projeto.adicionarTask(novaTask);
                 // avisa ação anterior
@@ -306,6 +332,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
         // se true -> lista vazia
         // se false -> lista povoada
     }
+
     @Override
     public void listaProjetos(Usuario usuario) {
         if (listaVazia(usuario)) {
@@ -322,7 +349,8 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
             divisor(); // separa um projeto do outro
         }
     }
-    public void menuProjetos(){
+
+    public int menuProjetos() {
         System.out.println("Seja bem vindo(a) ao ToDoTask! 📋 \n" +
                 "----------------------------------------------\n" +
                 "--- Esse é o seu gerenciador de Projetos! ---\n" +
@@ -332,5 +360,6 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
                 "4. Sair");
         divisor();
         System.out.println("Digite qual serviço deseja: ");
+        return Integer.parseInt(scanner.nextLine());
     }
 }
