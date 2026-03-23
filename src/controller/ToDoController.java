@@ -47,13 +47,15 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
     public Categoria menuCategorias() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Escolha uma categoria:");
+
             int i = 1;
             for (Categoria cat : categoriaService.listarCategorias()) {
                 System.out.println(i + ". " + cat.getNome());
                 i++;
             }
             System.out.println(i + ". Criar nova categoria");
+            divisor();
+            System.out.println("Escolha uma categoria:");
             String entrada = scanner.nextLine();
             int opcao;
             try {
@@ -63,7 +65,9 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
                 continue;
             }
             if (opcao == i) {
+                divisor();
                 System.out.println("Digite o nome da nova categoria:");
+                divisor();
                 String nome = scanner.nextLine();
                 if (!nome.isBlank()) {
                     return categoriaService.criarCategoria(nome);
@@ -91,11 +95,12 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
     }
 
 
-    public int menu() {
+    public int menu(Usuario usuario, Projeto projeto) {
         divisor();
         System.out.println("Seja bem vindo(a) ao ToDoTask! 📋");
         divisor();
-        System.out.println("Essas são suas opções: \n" +
+        System.out.println("--- Esse é o seu gerenciador de Task's! ---\n" +
+                 "--- Projeto: " + projeto.getNome() + "\n" +
                 " 1. Criar uma nova task\n" +
                 " 2. Editar task\n" +
                 " 3. Excluir task\n" +
@@ -165,12 +170,12 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
         return new Task(ID, nomeTask, categoria, descricao);
     }
 
-    public void listarTasks(ArrayList<Task> tasks) {
+    public void listarTasks(ArrayList<Task> tasks, Projeto projeto) {
         if (tasks.isEmpty()) {
             System.out.println("Erro ao listar: Não foi encontrado nenhuma task registrada. ");
             return;
         }
-        System.out.println("ToDoTask — Sua lista de Task's");
+        System.out.println("ToDoTask — Sua lista de Task's | Projeto " + projeto.getNome() );
         divisor();
         for (Task task : tasks) {
             System.out.println(task.toString());
@@ -198,7 +203,9 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
             String descricao;
             while (true) {
             // recebe descricao
+                divisor();
                 System.out.println("Descrição da Task: ");
+                divisor();
                 descricao = scanner.nextLine();
                 // verifica nome da Task
                 if (descricao.isBlank()) {
@@ -213,7 +220,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
                 projeto.adicionarTask(novaTask);
                 // avisa ação anterior
                 divisor();
-                System.out.println("Task " + nomeTask + "adicionada ao Projeto " + projeto.getNome() + " com sucesso!");
+                System.out.println("Task " + nomeTask + " adicionada a " + projeto.getNome() + " com sucesso!");
                 // retorna resultado da função
                 return novaTask;
             }
@@ -225,6 +232,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
         for (Task task : tasks) {
             if (task.getId() == ID) {
                 task.setStatus(Status.CONCLUIDA);
+                divisor();
                 System.out.println("Task " + task.getNomeTask() + " completada com sucesso! ");
                 return;
             }
@@ -236,6 +244,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
         for (Task task : tasks) {
             if (task.getId() == ID) {
                 // nome
+                divisor();
                 System.out.println("ToDoTask - Altere o nome da task selecionada: ");
                 String nomeEdit = scanner.nextLine();
                 divisor();
@@ -269,6 +278,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
     public Projeto criaProjeto(int id, Usuario usuario) {
         while (true) {
             // recebe nome do projeto
+            divisor();
             System.out.println("Nome do Projeto: ");
             String nomeProj = scanner.nextLine();
             // verifica o nome do projeto
@@ -284,8 +294,7 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
             usuario.adicionarProjeto(projeto);
             // avisa sobre a ação anterior
             divisor();
-            System.out.println("Projeto " + projeto.getNome() + " criado com sucesso!");
-            divisor();
+            System.out.println(projeto.getNome() + " criado com sucesso!");
             // retorna resultado da função
             return projeto;
         }
@@ -305,11 +314,23 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
             divisor();
             return;
         }
+        divisor();
         System.out.println("ToDoTask - Aqui estão os Projetos de " + usuario.getNome());
         divisor(); // separa mensagem dos projetos
         for (Projeto projeto : usuario.getProjetos()) {
             System.out.println("Projeto: " + projeto.getNome());
             divisor(); // separa um projeto do outro
         }
+    }
+    public void menuProjetos(){
+        System.out.println("Seja bem vindo(a) ao ToDoTask! 📋 \n" +
+                "----------------------------------------------\n" +
+                "--- Esse é o seu gerenciador de Projetos! ---\n" +
+                "1. Criar projeto \n" +
+                "2. Listar projetos \n" +
+                "3. Entrar em projeto \n" +
+                "4. Sair");
+        divisor();
+        System.out.println("Digite qual serviço deseja: ");
     }
 }

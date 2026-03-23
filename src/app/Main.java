@@ -1,12 +1,18 @@
 package app;
 
 import controller.ToDoController;
+import model.Projeto;
 import model.Usuario;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    public static int pedirID(Scanner input) {
+        System.out.println("Digite o ID:");
+        return Integer.parseInt(input.nextLine());
+    }
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         ToDoController executar = new ToDoController();
@@ -21,114 +27,87 @@ public class Main {
             System.out.println("Erro no cadastro: " + e.getMessage());
             return;
         }
-
         // execução do menu principal do gerenciador
-
-        while(desejaContinuar){
-            try {
-                int opcao = executar.menu();
-                switch (opcao){
-                    case 1:
-                        // 1 - Criar task
-                        // Tratamento de erros [x]
-                        novoUsuario.getTasks().add(executar.criaTask(idTask));
-                        idTask++;
-                        break;
-                    case 2:
-                        // 2 - Editar task
-                        // Tratamento de erros [x]
-                        System.out.println("Digite o ID da Task que deseja editar: ");
-                        String entrada = input.nextLine();
-
-                        if (entrada.isBlank()){
-                            executar.divisor();
-                            System.out.println("O ID não pode ser vazio. Tente novamente.");
-                            executar.divisor();
-                            continue;
-                        }
-                        int idEditar; // variavel que guarda a conversão
-                        try{
-                            // tenta converter pra Int
-                            idEditar = Integer.parseInt(entrada);
-                        }catch (NumberFormatException e) {
-                            // se não consegue é pq digitaram algum texto
-                            executar.divisor();
-                            System.out.println("Digite um número válido. Tente novamente.");
-                            executar.divisor();
-                            continue;
-                        }
-                        if (idEditar <= 0) {
-                            System.out.println("Digite um ID válido.");
-                            continue;
-                        }
-                         executar.editarTask(idEditar, novoUsuario.getTasks());
-                        break;
-                    case 3:
-                        // 3 - Excluir task
-                        // Tratamento de erros [ ]
-                        int taskId = 0;
-                        try {
-                            System.out.println("Digite o ID da task que deseja excluir: ");
-                            taskId = input.nextInt();
-                            input.nextLine(); // limpa buffer
-                        } catch (InputMismatchException e) {
-                            // pega entrada errada
-                            input.nextLine();
-                            executar.divisor();
-                            System.out.println("Digite uma entrada númerica válida. Tente novamente.");
-                            continue;
-                        }
-                        if (taskId <= 0) {
-                            executar.divisor();
-                            System.out.println("Digite um ID válido.");
-                            continue;
-                        }
-                        executar.excluirTask(taskId, novoUsuario.getTasks());
-                        break;
-                    case 4:
-                        // 4 - Completar task
-                        System.out.println("Digite o ID da Task que deseja completar: ");
-                        String entradaComplete = input.nextLine();
-                        if(entradaComplete.isBlank()){
-                            executar.divisor();
-                            System.out.println("O ID não pode ser vazio. Tente novamente.");
-                            executar.divisor();
-                            continue;
-                        }
-                        int idTaskComplete;
-                        try{
-                            idTaskComplete = Integer.parseInt(entradaComplete);
-                        }catch (NumberFormatException e){
-                            executar.divisor();
-                            System.out.println("Digite um número válido.");
-                            executar.divisor();
-                            continue;
-                    }
-                        if (idTaskComplete <=0){
-                            executar.divisor();
-                            System.out.println("Digite um ID válido.");
-                            executar.divisor();
-                            continue;
-                        }
-                        executar.completaTask(idTaskComplete, novoUsuario.getTasks());
-                        break;
-                    case 5:
-                        // 5 - Listar todas as tasks
-                        executar.listarTasks(novoUsuario.getTasks());
-                        break;
-                    case 6:
-                        //  6 - Sair
-                        System.out.println("Encerrando...");
+        int idProjeto = 1;
+        while (desejaContinuar) {
+            executar.divisor();
+            executar.menuProjetos();
+            int opcao = input.nextInt();
+            input.nextLine(); // limpa buffer
+            switch (opcao) {
+                case 1: // cria projetos
+                    executar.criaProjeto(idProjeto, novoUsuario);
+                    idProjeto++;
+                    break;
+                case 2:
+                    executar.listaProjetos(novoUsuario);
+                    break;
+                case 3:
+                    if (novoUsuario.getProjetos().isEmpty()) {
                         executar.divisor();
-                        desejaContinuar = false;
+                        System.out.println("Nenhum projeto de " + novoUsuario.getNome() + " foi encontrado.");
+                        executar.divisor();
                         break;
-                    default:
-                        System.out.println("Digite uma opção válida!");
-                }
-            } catch (RuntimeException e) {
-                executar.divisor();
-                System.out.println("Ocorreu um erro inesperado. Tente novamente.");
+                    }
+                    // listagem de projetos vinculados ao usuário
+                    System.out.println("ToDoTask - Esses são os projetos disponíveis: \n");
+                    for (int i = 0; i < novoUsuario.getProjetos().size(); i++) {
+                        System.out.println((i + 1) + ". " + novoUsuario.getProjetos().get(i).getNome());
+                    }
+                    executar.divisor();
+                    System.out.println("Escolha o projeto: ");
+                    int escolha = input.nextInt();
+                    input.nextLine();
+                    Projeto projetoEscolhido = novoUsuario.getProjetos().get(escolha - 1);
+                    boolean dentroProjeto = true;
+                    while (dentroProjeto) {
+                        int opTask = executar.menu(novoUsuario, projetoEscolhido); // menu antigo para a manipulação de tasks
+                        switch (opTask) {
+                            case 1:
+                                // cria nova task
+                                executar.criaTaskProjeto(idTask, projetoEscolhido);
+                                idTask++;
+                                break;
+                            case 2:
+                                // edita uma task
+                                executar.editarTask(
+                                        pedirID(input),
+                                        projetoEscolhido.getTasks()
+                                );
+                                break;
+                            case 3:
+                                // cria uma task
+                                executar.excluirTask(
+                                        pedirID(input),
+                                        projetoEscolhido.getTasks()
+                                );
+                                break;
+                            case 4:
+                                // completar task
+                                executar.completaTask(
+                                        pedirID(input),
+                                        projetoEscolhido.getTasks()
+                                );
+                                break;
+                            case 5:
+                                // lista as tasks de um projeto
+                                executar.listarTasks(
+                                        projetoEscolhido.getTasks(), projetoEscolhido
+                                );
+                                break;
+                            case 6:
+                                dentroProjeto = false;
+                                break;
+                        }
+                    }
+                case 4:
+                    desejaContinuar = false;
+                    System.out.println("Encerrando...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
             }
         }
     }
 }
+
