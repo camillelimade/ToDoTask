@@ -49,29 +49,16 @@ public class ToDoController implements UsuarioService, TaskService, ProjetoServi
 
     @Override
     public Usuario login(String email, String senha) {
-        while (true) {
-            // recebe atributos
-            divisor();
-            System.out.println("Digite seu e-mail: ");
-            String email = scanner.nextLine();
-            divisor();
-            System.out.println("Digite sua senha: ");
-            String senha = scanner.nextLine();
-            divisor();
-            if (email.isBlank() || senha.isBlank()) {
-                System.out.println("O e-mail e senha não podem ser vazios. Tente novamente.");
-                continue;
-            }
-            if (usuario.autenticar(email, senha)) {
-                divisor();
-                System.out.println("Login de " + usuario.getNome() + " realizado com sucesso!");
-                return usuario;
-            } else {
-                System.out.println("Erro no Login: E-mail ou Senha inválidos. Tente novamente.");
-            }
+        if (email == null || senha == null || email.isBlank() || senha.isBlank()) {
+            throw new IllegalArgumentException("Email ou senha inválidos");
         }
+        // Simulação (temporário só pra compilar)
+        Usuario usuario = new Usuario("Teste", email, senha);
+        if (usuario.autenticar(email, senha)) {
+            return usuario;
+        }
+        throw new RuntimeException("Login inválido");
     }
-
     public Categoria menuCategorias() {
         while (true) {
 
