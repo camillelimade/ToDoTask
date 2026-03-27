@@ -6,7 +6,7 @@ import service.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ToDoController implements UsuarioService, TaskService, ProjetoService {
+public class ToDoController implements TaskService, ProjetoService {
     private ArrayList<Task> tasks = new ArrayList<>();
     private CategoriaService categoriaService = new CategoriaService();
     private final Scanner scanner = new Scanner(System.in);

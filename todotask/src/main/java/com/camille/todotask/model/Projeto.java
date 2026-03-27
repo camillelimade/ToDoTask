@@ -1,24 +1,15 @@
-package model;
+package com.camille.todotask.model;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
-public class Projeto extends Entidade {
-    private int id;
+@Entity
+public class Projeto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
-    private ArrayList<Task> tasks = new ArrayList<>();
-    public Projeto(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-    @Override
-    public int getId() {
-        return id;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void adicionarTask(Task task) {
-        tasks.add(task);
-    }
-    public ArrayList<Task> getTasks() {
-        return tasks;
-    }
+    @ManyToOne
+    private Usuario usuario;
+    @OneToMany(mappedBy = "projeto")
+    private ArrayList<model.Task> tasks;
 }

@@ -1,6 +1,6 @@
 package com.camille.todotask.model;
-
 import jakarta.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 public class Usuario {
@@ -12,7 +12,6 @@ public class Usuario {
     private String email;
     private String senha;
 
-    public boolean autenticar(String email, String senha) {
-        return this.email.equals(email) && this.senha.equals(senha);
-    }
+    @OneToMany(mappedBy = "usuario")
+    private ArrayList<model.Projeto> projetos;
 }
