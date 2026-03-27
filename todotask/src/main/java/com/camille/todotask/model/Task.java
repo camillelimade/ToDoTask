@@ -7,6 +7,7 @@ public class Task extends Entidade {
     private Categoria categoria;
     private String descricao;
     private Status status;
+    private Projeto projeto;
 
     public Task(int id, String texto, Categoria categoria, String descricao) {
         this.id = id;
@@ -15,6 +16,14 @@ public class Task extends Entidade {
         this.categoria = categoria;
         this.descricao = descricao;
         this.status = Status.PENDENTE;
+    }
+
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
     public Status getStatus() {
