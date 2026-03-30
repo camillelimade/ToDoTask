@@ -11,5 +11,5 @@ public class Projeto {
     @ManyToOne
     private Usuario usuario;
     @OneToMany(mappedBy = "projeto")
-    private ArrayList<model.Task> tasks;
+    private ArrayList<Task> tasks;
 }

@@ -13,5 +13,5 @@ public class Usuario {
     private String senha;
 
     @OneToMany(mappedBy = "usuario")
-    private ArrayList<model.Projeto> projetos;
+    private ArrayList<Projeto> projetos;
 }
